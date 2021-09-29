@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <div class="logo" v-show="headerStataus">后台管理系统</div>
+        <div class="logo" v-show="headerStataus">AI控制台</div>
         <div class="user-info">
             <el-dropdown trigger="click" @command="handleCommand">
                 <span class="el-dropdown-link">

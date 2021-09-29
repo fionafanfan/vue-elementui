@@ -1,9 +1,9 @@
 <template>
     <div class="login-wrap">
-        
+
         <div class="ms-login">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
-            <div class="ms-title">后台管理系统</div>
+            <div class="ms-title">AI控制台</div>
                 <el-form-item prop="username">
                     <el-input v-model="ruleForm.username" placeholder="username"></el-input>
                 </el-form-item>
@@ -55,6 +55,7 @@
                                 sessionStorage.setItem('meuns',qs.stringify(result.data.meuns));
                                 sessionStorage.setItem('routers',result.data.routers);
                                 self.$router.push('/home');
+                                console.log('self.$router',self.$router)
                             } else {
                                 self.$message.error(response.data.message);
                             }
@@ -73,7 +74,7 @@
 
 <style scoped>
     .login-wrap{
-       
+
         width:100%;
         height:40%;
         -webkit-border-radius: 5px;
