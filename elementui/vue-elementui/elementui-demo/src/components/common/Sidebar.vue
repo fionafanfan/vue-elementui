@@ -23,30 +23,60 @@
         data() {
             return {
                 items: [
-                    // {
-                    //     icon: 'el-icon-setting',
-                    //     index: '/home',
-                    //     title: '首页'
-                    // },
-                    // {
-                    //     icon: 'el-icon-menu',
-                    //     index: '2',
-                    //     title: '用户管理',
-                    //     subs: [
-                    //         {
-                    //             index: '/users',
-                    //             title: '用户列表'
-                    //         }
-                    //     ]
-                    // }
+                      {
+                      icon: 'el-icon-setting',
+                      index: '/home',
+                      title: '首页'
+                      },
+                    {
+                      icon: 'el-icon-menu',
+                      index: '2',
+                      title: '模型生产',
+                        subs: [
+                        {
+                        index: '/models',
+                        title: '意圖模型列表'
+                        }
+                        ]
+                      },
+                    {
+                      icon: 'el-icon-menu',
+                      index: '2',
+                      title: '意圖管理',
+                        subs: [
+                        {
+                        index: '/intents',
+                        title: '意圖類型列表'
+                        },
+                        {
+                        index: '/intent/data',
+                        title: '意圖語料列表'
+                        }
+                        ]
+                      },
+                      {
+                      icon: 'el-icon-menu',
+                      index: '2',
+                      title: '實體管理',
+                        subs: [
+                        {
+                        index: '/entitys',
+                        title: '實體類型列表'
+                        },
+                        {
+                        index: '/entity/data',
+                        title: '實體數據列表'
+                        }
+                        ]
+                      }
                 ]
             }
         },
-        beforeMount() {
-            var meuns = sessionStorage.getItem('meuns');
-            var qs = require('qs');
-            this.items = qs.parse(meuns);
-        },
+        //beforeMount() {
+        //    var meuns = sessionStorage.getItem('meuns');
+        //    var qs = require('qs');
+        //    this.items = qs.parse(menus);
+       // },
         computed: {
             onRoutes(){
                 console.log(this.$route.path);

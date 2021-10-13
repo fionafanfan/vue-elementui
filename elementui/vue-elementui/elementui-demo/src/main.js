@@ -12,32 +12,32 @@ Vue.use(AxiosPlugin)
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
 
-//判断是否有token,没有则登陆
-router.beforeEach((to, from, next) => {
-  if (to.path != '/login') {
-    var token = sessionStorage.getItem('token');
-    if (token == null) {
-       next({path:'/login'});
-    } else {
-      //根据后台返回的路由进行判断是否合法
-      var routers = sessionStorage.getItem('routers');
-      var flag = false;
-      routers.split("_").forEach( v => {
-        if(v == to.path) {
-          flag = true;
-        }
-      });
-
-      if(flag) {
-       next();
-      } else {
-         next({path:'/home'});
-      }
-    }
-  } else {
-    next();
-  }
-})
+// //判断是否有token,没有则登陆
+// router.beforeEach((to, from, next) => {
+//   if (to.path != '/login') {
+//     var token = sessionStorage.getItem('token');
+//     if (token == null) {
+//        next({path:'/login'});
+//     } else {
+//       //根据后台返回的路由进行判断是否合法
+//       var routers = sessionStorage.getItem('routers');
+//       var flag = false;
+//       routers.split("_").forEach( v => {
+//         if(v == to.path) {
+//           flag = true;
+//         }
+//       });
+//
+//       if(flag) {
+//        next();
+//       } else {
+//          next({path:'/home'});
+//       }
+//     }
+//   } else {
+//     next();
+//   }
+// })
 
 
 /* eslint-disable no-new */

@@ -1,6 +1,6 @@
 <template>
   <div id="index">
-    Index
+    AI控制台，主要用於AI意圖和實體模型的訓練，上傳訓練數據，測試訓練結果等等
   </div>
 </template>
 <script type="text/javascript">
@@ -13,8 +13,8 @@
         const h = this.$createElement;
 
         this.$notify({
-          title: '标题名称',
-          message: h('i', { style: 'color: teal'}, '欢迎进入程序的世界'),
+          title: 'AI控制台-首頁',
+          message: h('i', { style: 'color: teal'}, '欢迎进入-AI控制台'),
           offset: 200
         });
       }
