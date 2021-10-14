@@ -101,54 +101,12 @@
   }
 </style>
 <script type="text/javascript">
-  import {getUserList} from '../../api'
+  import {getEntityTypeList} from '../../api'
 
   export default {
     data() {
       return {
-           tableData: [
-                {'name': 'menu_name', 'displayname': '餐單種類', 'author': '官方', 'isextend': 1, 'issys': 1, 'wordtype': 'vocab', 'functype': 'slot', 'samples': '早餐；午餐；晚餐等', 'status': 1},
-                {'name': 'time_name', 'displayname': '時間種類', 'author': '官方', 'isextend': 1, 'issys': 1, 'wordtype': 'vocab', 'functype': 'slot', 'samples': '', 'status': 1},
-                {'name': 'address_name', 'displayname': '地址種類', 'author': '官方', 'isextend': 1, 'issys': 1, 'wordtype': 'vocab', 'functype': 'slot', 'samples': '', 'status': 1},
-                {'name': 'product_name', 'displayname': '產品', 'author': '官方', 'isextend': 1, 'issys': 1, 'wordtype': 'vocab', 'functype': 'slot', 'samples': '口罩，勞力士等，明顯是物品或商品之類的詞', 'status': 1},
-                {'name': 'information_name', 'displayname': '介紹種類', 'author': '官方', 'isextend': 1, 'issys': 1, 'wordtype': 'vocab', 'functype': 'slot', 'samples': '', 'status': 1},
-                {'name': 'menu_context_word', 'displayname': '餐單語義', 'author': '官方', 'isextend': 1, 'issys': 1, 'wordtype': 'vocab', 'functype': 'context', 'samples': '餐單；餐牌；菜單；菜牌等', 'status': 1},
-                {'name': 'time_context_word', 'displayname': '時間語義', 'author': '官方', 'isextend': 1, 'issys': 1, 'wordtype': 'vocab', 'functype': 'context', 'samples': '時間；幾點；等', 'status': 1},
-                {'name': 'address_context_word', 'displayname': '地址語義', 'author': '官方', 'isextend': 1, 'issys': 1, 'wordtype': 'vocab', 'functype': 'context', 'samples': '地址；地點；地方；哪裏', 'status': 1},
-                {'name': 'product_context_word', 'displayname': '找產品語義', 'author': '官方', 'isextend': 1, 'issys': 1, 'wordtype': 'vocab', 'functype': 'context', 'samples': '', 'status': ''},
-                {'name': 'information_context_word', 'displayname': '介紹語義', 'author': '官方', 'isextend': 1, 'issys': 1, 'wordtype': 'vocab', 'functype': 'context', 'samples': '簡介；介紹；詳情；等', 'status': 1},
-                {'name': 'book_contex_word', 'displayname': '預約語義', 'author': '官方', 'isextend': 1, 'issys': 1, 'wordtype': 'vocab', 'functype': 'context', 'samples': '預約；預定；預訂；book 等', 'status': 2},
-                {'name': 'cancel_book_contex_word', 'displayname': '取消預約語義', 'author': '官方', 'isextend': 1, 'issys': 1, 'wordtype': 'vocab', 'functype': 'context', 'samples': '取消預約；取消預定；取消預訂；cancel book;', 'status': 2},
-                {'name': 'date_time', 'displayname': '日期和時間', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'other', 'functype': 'slot', 'samples': '11月18号;\n三点;\n上午;\n端午节;\n情人节;\n星期一', 'status': 2},
-                {'name': 'number', 'displayname': '數字', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'other', 'functype': 'slot', 'samples': '1-20位数字 支持汉字数字和阿拉伯数字：\n1101;\n一仟二百一拾五', 'status': 2},
-                {'name': 'url', 'displayname': '網址', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'regex', 'functype': 'slot', 'samples': '正則', 'status': 2},
-                {'name': 'tel', 'displayname': '電話號碼', 'author':'官方', 'isextend': 2, 'issys': 1, 'wordtype': 'regex', 'functype': 'slot', 'samples': '正則', 'status': 2},
-                {'name': 'hello', 'displayname': '你好', 'author': '官方', 'isextend': 2,'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'thank', 'displayname': '謝謝', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'please', 'displayname': '請', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype':'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'modal', 'displayname': '語氣詞', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'ask', 'displayname': '詢問', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'yao', 'displayname': '索要', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'give', 'displayname': '給我', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'can', 'displayname': '可以', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'can_check', 'displayname': '可不可以', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'yes', 'displayname': 1, 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'no', 'displayname': '不', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'what', 'displayname': '什麽', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'what_have', 'displayname': '有什麽', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'what_is', 'displayname': '是什麽', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'what_have_check', 'displayname': '有沒有', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'what_is_check', 'displayname': '是不是', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'where', 'displayname': '地點', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'iwant', 'displayname': '我想', 'author': '官方','isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'query', 'displayname': '查詢', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'how', 'displayname': '怎樣', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'Inform', 'displayname': '告訴', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux','samples': '輔助詞', 'status': 1},
-                {'name': 'helpme', 'displayname': '幫我', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'you', 'displayname': '你', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'me', 'displayname': '我', 'author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1},
-                {'name': 'my', 'displayname': '我的','author': '官方', 'isextend': 2, 'issys': 1, 'wordtype': 'vocab', 'functype': 'aux', 'samples': '輔助詞', 'status': 1}
-],
+        tableData: [],
         formInline: {
           name: 'menu_name',
           id:'1'
@@ -188,11 +146,9 @@
         var params = {
           page: this.currentPage,
           pageSize: this.pageSize,
-          name: this.formInline.name,
-          address: this.formInline.address
         };
-        getUserList(params).then(function(result){
-          this.tableData = result.data.list;
+        getEntityTypeList(params).then(function(result){
+          this.tableData = result.data.tableData;
           this.total = result.data.total;
           this.loading2 = false;
         }.bind(this)).catch(function (error) {

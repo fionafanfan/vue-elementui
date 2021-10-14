@@ -28,11 +28,6 @@
                       index: '/home',
                       title: '首页'
                       },
-                       {
-                      icon: 'el-icon-menu',
-                      index: '/models',
-                      title: '模型管理'
-                      },
                     {
                       icon: 'el-icon-menu',
                       index: '2',

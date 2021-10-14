@@ -101,31 +101,20 @@
   }
 </style>
 <script type="text/javascript">
-  import {getUserList} from '../../api'
+  import {getIntentTypeList} from '../../api'
 
   export default {
     data() {
       return {
-           tableData: [
-          {'name': 'entity', 'displayname': '實體', 'intenttype': 'other', 'description': '實體意圖，譬如：明天呢，明天 北京呢？這樣的 意為-實體，沒有説明非常明顯的意圖', 'isextend': 2},
-          {'name': 'chat', 'displayname': '閑聊', 'intenttype': 'other', 'description': '閑聊，就是偏聊天類的短語', 'isextend': 2},
-          {'name': 'unknow', 'displayname': '未知', 'intenttype': 'other', 'description': '就是系統未能識別的意圖', 'isextend': 2},
-          {'name': 'unprocess', 'displayname': '不處理', 'intenttype': 'other', 'description': '就是系統有相關語料，但是將相關意圖歸與不處理的意圖', 'isextend': 2},
-          {'name': 'ask_menu', 'displayname': '餐單', 'intenttype': 'keyword', 'description': '在餐廳内，詢問餐單，索要餐單，以備後續點單做準備', 'isextend': 1},
-          {'name': 'company_address', 'displayname': '公司地址', 'intenttype': 'keyword', 'description': '詢問公司地址，譬如:請問你們公司地址在哪裏？你們公司怎麽過去？', 'isextend': 1},
-          {'name': 'company_business_time', 'displayname': '營業時間', 'intenttype': 'keyword', 'description': '詢問公司營業時間，譬如：營業時間；你們上班的時間是多少？', 'isextend': 1},
-          {'name': 'company_information', 'displayname': '公司介紹', 'intenttype': 'keyword', 'description': '詢問公司介紹：譬如：公司介紹;介紹下你們公司', 'isextend': 1},
-          {'name': 'search_products', 'displayname': '產品', 'intenttype': 'search', 'description': '搜索產品，詢問產品，譬如： 有沒有火鷄賣？有沒有口罩？ 口罩？', 'isextend': 1},
-          {'name': 'book', 'displayname': '預約', 'intenttype': 'task', 'description': '預約', 'isextend': 1},
-          {'name': 'cancel_book', 'displayname': '取消預約', 'intenttype': 'task', 'description': '取消預約', 'isextend': 1}
-          ],
+        tableData: [],
         formInline: {
-          name: 'ask_menu',
-          id:'1'
+          name: '',
+          id:''
         },
         currentPage:1,
-        total:1,
+        total:0,
         pageSize:5,
+        isextendList:[],
         intenttypeList:["other", "keyword", "search","task"],
         pickerOptions0: {
             disabledDate(time) {
@@ -157,10 +146,9 @@
         var params = {
           page: this.currentPage,
           pageSize: this.pageSize,
-          name: this.formInline.name,
-          displayname: this.formInline.displayname
+          vid: "intent_entity_special_one"
         };
-        getUserList(params).then(function(result){
+        getIntentTypeList(params).then(function(result){
           this.tableData = result.data.list;
           this.total = result.data.total;
           this.loading2 = false;

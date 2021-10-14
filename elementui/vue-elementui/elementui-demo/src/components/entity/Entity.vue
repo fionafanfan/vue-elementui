@@ -85,29 +85,18 @@
   }
 </style>
 <script type="text/javascript">
-  import {getUserList} from '../../api'
+  import {getEntityList} from '../../api'
 
   export default {
     data() {
       return {
-           tableData: [
-     {'standword': '午餐', 'synonyms': ['午飯', '中飯', '中餐', '中午飯', 'lunch'], 'name': 'menu_name'},
-     {'standword': '晚餐', 'synonyms': ['晚飯', 'dirner'], 'name': 'menu_name'},
-     {'standword': '下午茶', 'synonyms': ['下午茶點', 'tea'], 'name': 'menu_name'},
-     {'standword': '夜宵', 'synonyms': ['宵夜'], 'name': 'menu_name'},
-     {'standword': '泰國菜', 'synonyms': ['泰國菜式'], 'name': 'menu_name'},
-     {'standword': '粵菜', 'synonyms': ['粵系菜式'], 'name': 'menu_name'},
-     {'standword': '早餐', 'synonyms': ['早飯', '早點', 'breafast'], 'name': 'menu_name'},
-     {'standword': 'PARTY餐', 'synonyms': [], 'name': 'menu_name'},
-     {'standword': '快餐', 'synonyms': ['套餐', '特餐'], 'name': 'menu_name'},
-     {'standword': '餐飲', 'synonyms': ['飲品'], 'name': 'menu_name'},
-          ],
+        tableData: [],
         formInline: {
-          name: 'ask_menu',
-          id:'1'
+          name: '',
+          id:''
         },
         currentPage:1,
-        total:1,
+        total:0,
         pageSize:5,
         pickerOptions0: {
             disabledDate(time) {
@@ -138,12 +127,10 @@
         this.loading2 = true;
         var params = {
           page: this.currentPage,
-          pageSize: this.pageSize,
-          name: this.formInline.name,
-          displayname: this.formInline.displayname
+          pageSize: this.pageSize
         };
-        getUserList(params).then(function(result){
-          this.tableData = result.data.list;
+        getEntityList(params).then(function(result){
+          this.tableData = result.data.tableData;
           this.total = result.data.total;
           this.loading2 = false;
         }.bind(this)).catch(function (error) {

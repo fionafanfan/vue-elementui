@@ -3,7 +3,7 @@
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
 
       <el-form-item label="模型標識名">
-        <el-input v-model="formInline.name" placeholder="模型標識名"></el-input>
+        <el-input v-model="formInline.vid" placeholder="模型標識名"></el-input>
       </el-form-item>
 
       <el-form-item label="模型中文名">
@@ -31,7 +31,7 @@
 
     <el-table :data="tableData" style="width: 100%" v-loading="loading2" element-loading-text="拼命加载中" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="name" label="模型标识名" width="180"></el-table-column>
+      <el-table-column prop="vid" label="模型标识名" width="180"></el-table-column>
       <el-table-column prop="displayname" label="模型中文名"></el-table-column>
       <el-table-column prop="modeltype" label="模型類型"></el-table-column>
       <el-table-column prop="date" label="更新日期" width="180"></el-table-column>
@@ -65,7 +65,7 @@
     <el-dialog title="编辑信息" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <el-form-item label="模型標識名" :label-width="formLabelWidth">
-          <el-input v-model="form.name" auto-complete="off"></el-input>
+          <el-input v-model="form.vid" auto-complete="off"></el-input>
         </el-form-item>
          <el-form-item label="模型中文名" :label-width="formLabelWidth">
           <el-input v-model="form.displayname" auto-complete="off"></el-input>
@@ -96,20 +96,18 @@
   }
 </style>
 <script type="text/javascript">
-  import {getUserList} from '../../api'
+  import {getModelList} from '../../api'
 
   export default {
     data() {
       return {
-           tableData: [
-          {'name': 'intent_entity_common', 'displayname': '通用'},
-          {'name': 'intent_entity_special_one', 'displayname': '定制一'},],
+        tableData: [],
         formInline: {
-          name: 'intent_entity_common',
-          id:'1'
+          name: '',
+          id:''
         },
         currentPage:1,
-        total:1,
+        total:0,
         pageSize:5,
         nameList:["intent_entity_common", "intent_entity_special_one"],
         displaynameList:["通用", "定制一"],
@@ -143,12 +141,10 @@
         this.loading2 = true;
         var params = {
           page: this.currentPage,
-          pageSize: this.pageSize,
-          name: this.formInline.name,
-          address: this.formInline.address
+          pageSize: this.pageSize
         };
-        getUserList(params).then(function(result){
-          this.tableData = result.data.list;
+        getModelList(params).then(function(result){
+          this.tableData = result.data.tableData;
           this.total = result.data.total;
           this.loading2 = false;
         }.bind(this)).catch(function (error) {
