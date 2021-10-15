@@ -7,9 +7,7 @@
       </el-form-item>
 
       <el-form-item label="模型中文名">
-        <el-select v-model="formInline.displayname" placeholder="模型中文名">
-          <el-option v-for="item in displaynameList" :key="item" :label="item" :value="item"></el-option>
-        </el-select>
+        <el-input v-model="formInline.displayname" placeholder="模型中文名"></el-input>
       </el-form-item>
 
       <el-form-item label="模型類型">
@@ -29,10 +27,21 @@
 
     </el-form>
 
+    <div class="block">
+        <div class="r_btn">
+          <el-button type="primary" size="small"  @click="showAddModelDialog()">新增</el-button>
+        </div>
+    </div>
+
     <el-table :data="tableData" style="width: 100%" v-loading="loading2" element-loading-text="拼命加载中" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="vid" label="模型标识名" width="180"></el-table-column>
+      <el-table-column prop="vid" label="模型标识名"  width="400" show-overflow-tooltip>
+      <template slot-scope="scope">
+        <a :href="scope.row.vid" target="_blank" class="buttonText">{{scope.row.vid}}</a>
+      </template>ss
+      </el-table-column>
       <el-table-column prop="displayname" label="模型中文名"></el-table-column>
+      <el-table-column prop="description" label="模型描述"></el-table-column>
       <el-table-column prop="modeltype" label="模型類型"></el-table-column>
       <el-table-column prop="date" label="更新日期" width="180"></el-table-column>
       <el-table-column fixed="right" label="操作" width="140">
@@ -65,13 +74,13 @@
     <el-dialog title="编辑信息" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <el-form-item label="模型標識名" :label-width="formLabelWidth">
-          <el-input v-model="form.vid" auto-complete="off"></el-input>
+          <el-input readonly="true"  v-model="form.vid" auto-complete="off"></el-input>
         </el-form-item>
          <el-form-item label="模型中文名" :label-width="formLabelWidth">
           <el-input v-model="form.displayname" auto-complete="off"></el-input>
         </el-form-item>
-         <el-form-item label="模型類型" :label-width="formLabelWidth">
-          <el-input v-model="form.modeltype" auto-complete="off"></el-input>
+         <el-form-item label="模型描述" :label-width="formLabelWidth">
+          <el-input v-model="form.description" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -166,17 +175,27 @@
         this.currentPage = val;
         this.loadData();
       },
+      //打开新增模型窗口-添加新的模型
+      showAddModelDialog(){
+        this.form.id = data.id;
+        this.form.name = data.name;
+        this.dialogFormVisible = true;
+      },
       //打开编辑窗口
       showEditDialog(row){
         var data = this.tableData[row];
-        this.form.id = data.id;
-        this.form.name = data.name;
-        this.form.address = data.address;
+        this.form.vid = data.vid;
+        this.form.displayname = data.displayname;
+        this.form.description = data.description;
         this.dialogFormVisible = true;
       },
       update(){
-        if (this.form.name == "") {
-          this.$message.error('姓名不能为空');
+        if (this.form.displayname == "") {
+          this.$message.error('模型中文名不能为空');
+          return;
+        }
+       if (this.form.description == "") {
+          this.$message.error('模型描述不能为空');
           return;
         }
         this.$message({

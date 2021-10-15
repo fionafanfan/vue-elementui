@@ -49,6 +49,10 @@ export default new Router({
         {
           path: '/user/info',
           component: resolve => require(['../components/user/UserInfo.vue'], resolve)
+        },
+       {
+          path: '/elemtest',
+          component: resolve => require(['../components/vuetest/VueElemForm.vue'], resolve)
         }
       ]
     }
