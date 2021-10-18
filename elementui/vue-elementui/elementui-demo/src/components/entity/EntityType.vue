@@ -108,14 +108,14 @@
       return {
         tableData: [],
         formInline: {
-          name: 'menu_name',
-          id:'1'
+          name: '',
+          id:''
         },
         currentPage:1,
-        total:43,
-        pageSize:5,
-        isextendList:["是","否"],
-        wordtypeList:["vocab", "regex"],
+        total:0,
+        pageSize:15,
+        isextendList:[],
+        wordtypeList:[],
         pickerOptions0: {
             disabledDate(time) {
               return time.getTime() < Date.now() - 8.64e7;
@@ -146,6 +146,7 @@
         var params = {
           page: this.currentPage,
           pageSize: this.pageSize,
+          vid:"intent_entity_special_one"
         };
         getEntityTypeList(params).then(function(result){
           this.tableData = result.data.tableData;

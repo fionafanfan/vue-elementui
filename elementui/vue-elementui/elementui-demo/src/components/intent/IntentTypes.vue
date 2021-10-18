@@ -113,9 +113,9 @@
         },
         currentPage:1,
         total:0,
-        pageSize:5,
+        pageSize:15,
         isextendList:[],
-        intenttypeList:["other", "keyword", "search","task"],
+        intenttypeList:[],
         pickerOptions0: {
             disabledDate(time) {
               return time.getTime() < Date.now() - 8.64e7;
@@ -149,7 +149,7 @@
           vid: "intent_entity_special_one"
         };
         getIntentTypeList(params).then(function(result){
-          this.tableData = result.data.list;
+          this.tableData = result.data.tableData;
           this.total = result.data.total;
           this.loading2 = false;
         }.bind(this)).catch(function (error) {

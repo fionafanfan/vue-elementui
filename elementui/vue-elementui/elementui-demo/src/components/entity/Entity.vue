@@ -97,7 +97,7 @@
         },
         currentPage:1,
         total:0,
-        pageSize:5,
+        pageSize:15,
         pickerOptions0: {
             disabledDate(time) {
               return time.getTime() < Date.now() - 8.64e7;
@@ -127,7 +127,8 @@
         this.loading2 = true;
         var params = {
           page: this.currentPage,
-          pageSize: this.pageSize
+          pageSize: this.pageSize,
+          vid:"intent_entity_special_one"
         };
         getEntityList(params).then(function(result){
           this.tableData = result.data.tableData;

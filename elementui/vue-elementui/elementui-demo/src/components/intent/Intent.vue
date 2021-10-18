@@ -78,23 +78,19 @@
   }
 </style>
 <script type="text/javascript">
-  import {getUserList} from '../../api'
+  import {getIntentList} from '../../api'
 
   export default {
     data() {
       return {
-           tableData: [
-          {'name': 'ask_menu', 'displayname': '餐單', 'text': '午餐餐單'},
-          {'name': 'ask_menu', 'displayname': '餐單', 'text': '給我一份今天的晚餐餐單'},
-          {'name': 'ask_menu', 'displayname': '餐單', 'text': '給我餐單'},
-          ],
+           tableData: [],
         formInline: {
-          name: 'ask_menu',
-          id:'1'
+          name: '',
+          id:''
         },
         currentPage:1,
-        total:1,
-        pageSize:5,
+        total:0,
+        pageSize:15,
         pickerOptions0: {
             disabledDate(time) {
               return time.getTime() < Date.now() - 8.64e7;
@@ -125,11 +121,11 @@
         var params = {
           page: this.currentPage,
           pageSize: this.pageSize,
-          name: this.formInline.name,
-          displayname: this.formInline.displayname
+          vid: "intent_entity_special_one",
+          pid:"TC001"
         };
-        getUserList(params).then(function(result){
-          this.tableData = result.data.list;
+        getIntentList(params).then(function(result){
+          this.tableData = result.data.tableData;
           this.total = result.data.total;
           this.loading2 = false;
         }.bind(this)).catch(function (error) {

@@ -18,7 +18,7 @@ export const getEntityTypeList = params => { return Axios.post(`${BASE_PATH}/api
 // 获取具体实体语料数据列表
 export const getEntityList = params => { return Axios.post(`${BASE_PATH}/api/nlp/entityCorpus/list`, params).then(res => res.data); };
 
-// 获取意图类型列表 getEntityTypeList
+// 获取意图类型列表
 export const getIntentTypeList = params => { return Axios.post(`${BASE_PATH}/api/nlp/intentType/list`, params).then(res => res.data); };
 
 // 获取具体意图语料数据列表

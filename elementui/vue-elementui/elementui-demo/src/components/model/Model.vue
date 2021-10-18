@@ -117,10 +117,10 @@
         },
         currentPage:1,
         total:0,
-        pageSize:5,
-        nameList:["intent_entity_common", "intent_entity_special_one"],
-        displaynameList:["通用", "定制一"],
-        modeltypeList:["intent", "entity"],
+        pageSize:15,
+        nameList:[],
+        displaynameList:[],
+        modeltypeList:[],
         pickerOptions0: {
             disabledDate(time) {
               return time.getTime() < Date.now() - 8.64e7;
