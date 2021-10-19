@@ -62,17 +62,6 @@
                         title: '實體數據列表'
                         }
                         ]
-                      },
-                      {
-                      icon: 'el-icon-menu',
-                      index: '2',
-                      title: '测试',
-                        subs: [
-                        {
-                        index: '/elemtest',
-                        title: '组件测试-Form'
-                        }
-                        ]
                       }
                 ]
             }

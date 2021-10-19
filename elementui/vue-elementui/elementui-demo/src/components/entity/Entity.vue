@@ -23,7 +23,7 @@
       <el-table-column prop="displayname" label="詞典中文名"></el-table-column>
       <el-table-column prop="standword" label="標準詞"></el-table-column>
       <el-table-column prop="synonyms" label="同義詞"></el-table-column>
-      <el-table-column prop="date" label="更新日期" width="180"></el-table-column>
+      <el-table-column prop="updatetime" label="更新日期" width="180"></el-table-column>
       <el-table-column fixed="right" label="操作" width="140">
         <template scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
@@ -53,12 +53,14 @@
     <!-- Form -->
     <el-dialog title="编辑信息" :visible.sync="dialogFormVisible">
       <el-form :model="form">
+       <el-form-item label="詞典標識名" :label-width="formLabelWidth">
+          <el-input readonly="true" v-model="form.entity_type" auto-complete="off"></el-input>
+        </el-form-item>
+
         <el-form-item label="標準詞" :label-width="formLabelWidth">
-          <el-input v-model="form.standword" auto-complete="off"></el-input>
+          <el-input readonly="true" v-model="form.standword" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="詞典標識名" :label-width="formLabelWidth">
-          <el-input v-model="form.entity_type" auto-complete="off"></el-input>
-        </el-form-item>
+
         <el-form-item label="同義詞" :label-width="formLabelWidth">
           <el-input v-model="form.synonyms" auto-complete="off"></el-input>
         </el-form-item>

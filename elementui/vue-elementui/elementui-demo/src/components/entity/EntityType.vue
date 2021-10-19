@@ -36,7 +36,7 @@
       <el-table-column prop="wordtype" label="词典類型"></el-table-column>
       <el-table-column prop="isextend" label="是否可擴"></el-table-column>
       <el-table-column prop="samples" label="詞典示例"></el-table-column>
-      <el-table-column prop="date" label="更新日期" width="180"></el-table-column>
+      <el-table-column prop="updatetime" label="更新日期" width="180"></el-table-column>
       <el-table-column fixed="right" label="操作" width="140">
         <template scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>

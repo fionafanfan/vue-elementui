@@ -12,6 +12,10 @@ export const getUserList = params => { return Axios.get(`${BASE_PATH}/user/list`
 // 获取模型列表
 export const getModelList = params => { return Axios.post(`${BASE_PATH}/api/nlp/model/list`, params).then(res => res.data); };
 
+// 獲取模型詳情信息
+export const getModelDeatilDate = params => { return Axios.post(`${BASE_PATH}/api/nlp/model/detail`, params).then(res => res.data); };
+
+
 // 获取实体类型列表 getEntityTypeList
 export const getEntityTypeList = params => { return Axios.post(`${BASE_PATH}/api/nlp/entityType/list`, params).then(res => res.data); };
 

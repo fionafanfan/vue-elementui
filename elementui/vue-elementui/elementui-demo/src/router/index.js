@@ -8,12 +8,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/login'
+      redirect: '/home'
     },
-    {
-      path: '/login',
-      component: resolve => require(['../components/user/Login.vue'], resolve)
-    },
+    // {
+    //   path: '/login',
+    //   component: resolve => require(['../components/user/Login.vue'], resolve)
+    // },
     {
       path: '/home',
       component: resolve => require(['../components/Home.vue'], resolve),
@@ -50,7 +50,7 @@ export default new Router({
           path: '/user/info',
           component: resolve => require(['../components/user/UserInfo.vue'], resolve)
         },
-       {
+        {
           path: '/elemtest',
           component: resolve => require(['../components/vuetest/VueElemForm.vue'], resolve)
         }

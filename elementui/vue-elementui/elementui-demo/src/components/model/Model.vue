@@ -35,27 +35,27 @@
 
     <el-table :data="tableData" style="width: 100%" v-loading="loading2" element-loading-text="拼命加载中" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="vid" label="模型标识名"  width="400" show-overflow-tooltip>
+      <el-table-column prop="vid" label="模型標識名"  width="400" show-overflow-tooltip>
       <template slot-scope="scope">
         <a :href="scope.row.vid" target="_blank" class="buttonText">{{scope.row.vid}}</a>
-      </template>ss
+      </template>
       </el-table-column>
       <el-table-column prop="displayname" label="模型中文名"></el-table-column>
       <el-table-column prop="description" label="模型描述"></el-table-column>
       <el-table-column prop="modeltype" label="模型類型"></el-table-column>
-      <el-table-column prop="date" label="更新日期" width="180"></el-table-column>
+      <el-table-column prop="updatetime" label="更新日期" width="180"></el-table-column>
       <el-table-column fixed="right" label="操作" width="140">
         <template scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small"  @click="showEditDialog(scope.$index)">编辑</el-button>
-          <el-button type="text" size="small"  @click="removeData(scope.$index)">删除</el-button>
+          <el-button type="text" size="small"  @click="showEditDialog(scope.$index)">編輯</el-button>
+          <el-button type="text" size="small"  @click="removeData(scope.$index)">刪除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <div class="block">
         <div class="r_btn">
-          <el-button type="primary" @click="batchRemove">批量删除</el-button>
+          <el-button type="primary" @click="batchRemove">批量刪除</el-button>
         </div>
         <div class="r_page">
           <el-pagination
@@ -78,6 +78,9 @@
         </el-form-item>
          <el-form-item label="模型中文名" :label-width="formLabelWidth">
           <el-input v-model="form.displayname" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="模型語言" :label-width="formLabelWidth">
+          <el-input v-model="form.language" auto-complete="off"></el-input>
         </el-form-item>
          <el-form-item label="模型描述" :label-width="formLabelWidth">
           <el-input v-model="form.description" auto-complete="off"></el-input>
@@ -106,6 +109,7 @@
 </style>
 <script type="text/javascript">
   import {getModelList} from '../../api'
+  import {getModelDeatilDate} from '../../api'
 
   export default {
     data() {
@@ -185,8 +189,18 @@
       showEditDialog(row){
         var data = this.tableData[row];
         this.form.vid = data.vid;
-        this.form.displayname = data.displayname;
-        this.form.description = data.description;
+        var params = {
+          vid: this.form.vid
+        };
+        getModelDeatilDate(params).then(function(result){
+          this.form.displayname = result.data.displayname;
+          this.form.description = result.data.description;
+          this.form.language = result.data.language;
+          this.form.isPrivate = result.data.isPrivate;
+        }.bind(this)).catch(function (error) {
+            this.loading2 = false;
+            console.log(error);
+        }.bind(this));
         this.dialogFormVisible = true;
       },
       update(){

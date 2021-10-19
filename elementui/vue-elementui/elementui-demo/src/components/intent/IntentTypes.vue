@@ -3,7 +3,7 @@
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
 
       <el-form-item label="意圖標識名">
-        <el-input v-model="formInline.name" placeholder="意圖標識名"></el-input>
+        <el-input v-model="formInline.intentname" placeholder="意圖標識名"></el-input>
       </el-form-item>
 
       <el-form-item label="意圖類型">
@@ -31,12 +31,12 @@
 
     <el-table :data="tableData" style="width: 100%" v-loading="loading2" element-loading-text="拼命加载中" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="name" label="意圖標識名" width="180"></el-table-column>
+      <el-table-column prop="intentname" label="意圖標識名" width="180"></el-table-column>
       <el-table-column prop="displayname" label="意圖中文名"></el-table-column>
       <el-table-column prop="intenttype" label="意圖類型"></el-table-column>
       <el-table-column prop="description" label="意圖描述"></el-table-column>
       <el-table-column prop="isextend" label="是否可擴"></el-table-column>
-      <el-table-column prop="date" label="更新日期" width="180"></el-table-column>
+      <el-table-column prop="updatetime" label="更新日期" width="180"></el-table-column>
       <el-table-column fixed="right" label="操作" width="140">
         <template scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
@@ -67,15 +67,15 @@
     <el-dialog title="编辑信息" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <el-form-item label="意圖標識名" :label-width="formLabelWidth">
-          <el-input v-model="form.name" auto-complete="off"></el-input>
+          <el-input readonly="true" v-model="form.intentname" auto-complete="off"></el-input>
         </el-form-item>
          <el-form-item label="意圖中文名" :label-width="formLabelWidth">
-          <el-input v-model="form.displayname" auto-complete="off"></el-input>
+          <el-input readonly="true" v-model="form.displayname" auto-complete="off"></el-input>
         </el-form-item>
-         <el-form-item label="意圖類型" :label-width="formLabelWidth">
+         <el-form-item readonly="true" label="意圖類型" :label-width="formLabelWidth">
           <el-input v-model="form.intenttype" auto-complete="off"></el-input>
         </el-form-item>
-         <el-form-item label="是否可擴" :label-width="formLabelWidth">
+         <el-form-item readonly="true" label="是否可擴" :label-width="formLabelWidth">
           <el-input v-model="form.isextend" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
@@ -174,9 +174,8 @@
       //打开编辑窗口
       showEditDialog(row){
         var data = this.tableData[row];
-        this.form.id = data.id;
-        this.form.name = data.name;
-        this.form.address = data.address;
+        this.form.intentname = data.intentname;
+        this.form.displayname = data.displayname;
         this.dialogFormVisible = true;
       },
       update(){
