@@ -35,18 +35,14 @@
 
     <el-table :data="tableData" style="width: 100%" v-loading="loading2" element-loading-text="拼命加载中" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="vid" label="模型標識名"  width="400" show-overflow-tooltip>
-      <template slot-scope="scope">
-        <a :href="scope.row.vid" target="_blank" class="buttonText">{{scope.row.vid}}</a>
-      </template>
-      </el-table-column>
+      <el-table-column prop="vid" label="模型標識名"  width="400" show-overflow-tooltip></el-table-column>
       <el-table-column prop="displayname" label="模型中文名"></el-table-column>
       <el-table-column prop="description" label="模型描述"></el-table-column>
       <el-table-column prop="modeltype" label="模型類型"></el-table-column>
       <el-table-column prop="updatetime" label="更新日期" width="180"></el-table-column>
       <el-table-column fixed="right" label="操作" width="140">
         <template scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+          <el-button @click="handleClick(scope.row.vid)" type="text" size="small">查看</el-button>
           <el-button type="text" size="small"  @click="showEditDialog(scope.$index)">編輯</el-button>
           <el-button type="text" size="small"  @click="removeData(scope.$index)">刪除</el-button>
         </template>
@@ -184,6 +180,15 @@
         this.form.id = data.id;
         this.form.name = data.name;
         this.dialogFormVisible = true;
+      },
+      // 查看特定模型的具體數據
+      handleClick(row){
+          console.log('查看vid--->',row)
+          if (row) {
+                    localStorage.setItem('vid',row)
+                    window.location.href = ('intents', 'intents')
+                }
+
       },
       //打开编辑窗口
       showEditDialog(row){

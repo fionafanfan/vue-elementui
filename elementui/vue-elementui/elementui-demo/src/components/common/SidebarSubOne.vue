@@ -1,5 +1,10 @@
 <template>
     <div class="sidebar">
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+      <el-form-item label="當前模型" :label-width="formLabelWidth">
+          <el-input readonly="true"  v-model="formInline.vid" auto-complete="off"></el-input>
+       </el-form-item>
+    </el-form>
         <el-menu :default-active="onRoutes" class="el-menu-vertical-demo" theme="light" unique-opened router>
             <template v-for="item in items">
                 <template v-if="item.subs">
@@ -19,14 +24,53 @@
 </template>
 
 <script>
+   import {getModelList} from '../../api'
+
     export default {
         data() {
             return {
-                items: [
+            modelvidList:[],
+            formInline:{
+            "vid":""
+              },
+                items: []
+            }
+        },
+        beforeMount() {
+            var meuns = sessionStorage.getItem('meuns');
+            var qs = require('qs');
+            //this.items = qs.parse(menus);
+            var params = {
+            page: this.currentPage,
+            pageSize: this.pageSize
+              };
+        getModelList(params).then(function(result){
+          this.tableData = result.data.tableData;
+          var modelvidList = []
+          this.tableData.forEach(function (item) {
+              if (item.vid) {
+                  //console.log('----item>>',item);
+                  modelvidList.push(item.vid)
+                  return;
+              }
+            //console.log('----item2>>',item);
+          });
+          this.modelvidList = modelvidList;
+          this.loading2 = false;
+        }.bind(this)).catch(function (error) {
+            this.loading2 = false;
+            console.log(error);
+        }.bind(this));
+            //this.modelvidList = ["v1","v2"]
+            console.log('vid-->',this.modelvidList)
+            var vid =localStorage.getItem('vid') ||'intent_entity_common'
+            this.formInline = {"vid":vid}
+            localStorage.setItem('vid',vid);
+            this.items = [
                       {
-                      icon: 'el-icon-setting',
-                      index: '/home',
-                      title: '首页'
+                      icon: 'el-icon-menu',
+                      index: '/models',
+                      title: '模型管理'
                       },
                     {
                       icon: 'el-icon-menu',
@@ -57,15 +101,14 @@
                         title: '實體數據列表'
                         }
                         ]
-                      }
+                      },
+                      {
+                      icon: 'el-icon-menu',
+                      index: '/doc',
+                      title: '文檔'
+                      },
                 ]
-            }
-        },
-        //beforeMount() {
-        //    var meuns = sessionStorage.getItem('meuns');
-        //    var qs = require('qs');
-        //    this.items = qs.parse(menus);
-       // },
+       },
         computed: {
             onRoutes(){
                 console.log(this.$route.path);

@@ -127,10 +127,11 @@
       //加载数据
       loadData() {
         this.loading2 = true;
+        var vid = localStorage.getItem('vid','intent_entity_common');
         var params = {
           page: this.currentPage,
           pageSize: this.pageSize,
-          vid:"intent_entity_special_one"
+          vid:vid
         };
         getEntityList(params).then(function(result){
           this.tableData = result.data.tableData;

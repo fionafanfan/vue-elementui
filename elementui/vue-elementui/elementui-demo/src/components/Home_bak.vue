@@ -12,7 +12,7 @@
 
 <script>
     import fjHeader from './common/Header.vue'
-    import fjSidebar from './common/SidebarSubOne.vue'
+    import fjSidebar from './common/Sidebar.vue'
     import {loadData} from '../api'
 
     export default {

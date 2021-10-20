@@ -8,18 +8,26 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/home'
+      redirect: '/models'
     },
     // {
     //   path: '/login',
     //   component: resolve => require(['../components/user/Login.vue'], resolve)
     // },
     {
+      path: '/hometwo',
+      component: resolve => require(['../components/HomeSubOne.vue'], resolve),
+    },
+    {
       path: '/home',
       component: resolve => require(['../components/Home.vue'], resolve),
       children:[
         {
           path: '/',
+          component: resolve => require(['../components/Index.vue'], resolve)
+        },
+        {
+          path: '/doc',
           component: resolve => require(['../components/Index.vue'], resolve)
         },
         {

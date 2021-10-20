@@ -19,7 +19,6 @@
       </el-form-item>
 
     </el-form>
-
     <el-table :data="tableData" style="width: 100%" v-loading="loading2" element-loading-text="拼命加载中" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="intentname" label="意圖標識名" width="180"></el-table-column>
@@ -97,7 +96,7 @@
     data() {
       return {
            tableData: [],
-        formInline: {
+          formInline: {
           name: '',
           id:''
         },
@@ -131,10 +130,11 @@
       //加载数据
       loadData() {
         this.loading2 = true;
+        var vid = localStorage.getItem('vid','intent_entity_common');
         var params = {
           page: this.currentPage,
           pageSize: this.pageSize,
-          vid: "intent_entity_special_one",
+          vid: vid,
           corpustype:"all",
           pid:"TC001"
         };

@@ -62,7 +62,12 @@
                         title: '實體數據列表'
                         }
                         ]
-                      }
+                      },
+                      {
+                      icon: 'el-icon-setting',
+                      index: '/doc',
+                      title: '文檔'
+                      },
                 ]
             }
         },
