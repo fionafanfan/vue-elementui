@@ -6,7 +6,9 @@
         <el-input v-model="formInline.intentname" placeholder="意圖標識名"></el-input>
       </el-form-item>
       <el-form-item label="語料類型">
-        <el-input v-model="formInline.corpustype" placeholder="語料類型"></el-input>
+        <el-select v-model="formInline.corpustype" placeholder="語料類型">
+          <el-option v-for="item in corpustypeList" :key="item" :label="item" :value="item"></el-option>
+        </el-select>
       </el-form-item>
 
       <el-form-item label="更新日期">
@@ -101,6 +103,7 @@
           id:''
         },
         currentPage:1,
+        corpustypeList:['all','template','text','slot'],
         total:0,
         pageSize:15,
         pickerOptions0: {
