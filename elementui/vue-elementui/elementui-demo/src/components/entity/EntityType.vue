@@ -2,12 +2,12 @@
   <div id="users">
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
 
-      <el-form-item label="词典標識名">
-        <el-input v-model="formInline.name" placeholder="词典標識名"></el-input>
+      <el-form-item label="實體類型標識名">
+        <el-input v-model="formInline.entity_type" placeholder="實體類型標識名"></el-input>
       </el-form-item>
 
-      <el-form-item label="词典類型">
-        <el-select v-model="formInline.wordtype" placeholder="词典類型">
+      <el-form-item label="實體數據類別">
+        <el-select v-model="formInline.wordtype" placeholder="實體數據類別">
           <el-option v-for="item in wordtypeList" :key="item" :label="item" :value="item"></el-option>
         </el-select>
       </el-form-item>
@@ -31,11 +31,11 @@
 
     <el-table :data="tableData" style="width: 100%" v-loading="loading2" element-loading-text="拼命加载中" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="name" label="词典標識名" width="180"></el-table-column>
-      <el-table-column prop="displayname" label="词典中文名"></el-table-column>
-      <el-table-column prop="wordtype" label="词典類型"></el-table-column>
+      <el-table-column prop="entity_type" label="實體類型標識名" width="180"></el-table-column>
+      <el-table-column prop="displayname" label="實體類型中文名"></el-table-column>
+      <el-table-column prop="wordtype" label="實體數據類別"></el-table-column>
       <el-table-column prop="isextend" label="是否可擴"></el-table-column>
-      <el-table-column prop="samples" label="詞典示例"></el-table-column>
+      <el-table-column prop="samples" label="示例"></el-table-column>
       <el-table-column prop="updatetime" label="更新日期" width="180"></el-table-column>
       <el-table-column fixed="right" label="操作" width="140">
         <template scope="scope">
@@ -66,14 +66,14 @@
     <!-- Form -->
     <el-dialog title="编辑信息" :visible.sync="dialogFormVisible">
       <el-form :model="form">
-        <el-form-item label="詞典標識名" :label-width="formLabelWidth">
-          <el-input v-model="form.name" auto-complete="off"></el-input>
+        <el-form-item label="實體類型標識名" :label-width="formLabelWidth">
+          <el-input readonly="true" v-model="form.entity_type" auto-complete="off"></el-input>
         </el-form-item>
-         <el-form-item label="詞典中文名" :label-width="formLabelWidth">
+         <el-form-item label="實體類型中文名" :label-width="formLabelWidth">
           <el-input v-model="form.displayname" auto-complete="off"></el-input>
         </el-form-item>
-         <el-form-item label="詞典類型" :label-width="formLabelWidth">
-          <el-input v-model="form.wordtype" auto-complete="off"></el-input>
+         <el-form-item label="實體數據類別" :label-width="formLabelWidth">
+          <el-input readonly="true" v-model="form.wordtype" auto-complete="off"></el-input>
         </el-form-item>
          <el-form-item label="是否可擴" :label-width="formLabelWidth">
           <el-input v-model="form.isextend" auto-complete="off"></el-input>
@@ -108,14 +108,15 @@
       return {
         tableData: [],
         formInline: {
-          name: '',
-          id:''
+          entity_type: '',
+          wordtype:'',
+          isextend:0
         },
         currentPage:1,
         total:0,
         pageSize:15,
-        isextendList:[],
-        wordtypeList:[],
+        isextendList:[0,1,2],
+        wordtypeList:["all","vocab","regex","other"],
         pickerOptions0: {
             disabledDate(time) {
               return time.getTime() < Date.now() - 8.64e7;
@@ -125,9 +126,9 @@
         dialogFormVisible: false,
         formLabelWidth: '120px',
         form: {
-            name: '',
-            address: '',
-            id:''
+          entity_type: '',
+          wordtype:'',
+          isextend:0
         },
         loading2: false,
         options: [],
@@ -147,6 +148,9 @@
         var params = {
           page: this.currentPage,
           pageSize: this.pageSize,
+          entity_type: this.formInline.entity_type,
+          wordtype: this.formInline.wordtype,
+          isextend:this.formInline.isextend,
           vid:vid
         };
         getEntityTypeList(params).then(function(result){
@@ -175,9 +179,10 @@
       //打开编辑窗口
       showEditDialog(row){
         var data = this.tableData[row];
-        this.form.id = data.id;
-        this.form.name = data.name;
-        this.form.address = data.address;
+        this.form.entity_type = data.entity_type;
+        this.form.displayname = data.displayname;
+        this.form.wordtype = data.wordtype;
+        this.form.isextend = data.isextend;
         this.dialogFormVisible = true;
       },
       update(){

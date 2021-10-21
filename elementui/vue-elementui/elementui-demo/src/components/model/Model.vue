@@ -6,19 +6,10 @@
         <el-input v-model="formInline.vid" placeholder="模型標識名"></el-input>
       </el-form-item>
 
-      <el-form-item label="模型中文名">
-        <el-input v-model="formInline.displayname" placeholder="模型中文名"></el-input>
-      </el-form-item>
-
       <el-form-item label="模型類型">
         <el-select v-model="formInline.modeltype" placeholder="模型類型">
           <el-option v-for="item in modeltypeList" :key="item" :label="item" :value="item"></el-option>
         </el-select>
-      </el-form-item>
-
-      <el-form-item label="更新日期">
-        <el-date-picker v-model="selectDate" type="date" placeholder="选择日期" :picker-options="pickerOptions0">
-        </el-date-picker>
       </el-form-item>
 
       <el-form-item>
@@ -39,7 +30,6 @@
       <el-table-column prop="displayname" label="模型中文名"></el-table-column>
       <el-table-column prop="description" label="模型描述"></el-table-column>
       <el-table-column prop="modeltype" label="模型類型"></el-table-column>
-      <el-table-column prop="updatetime" label="更新日期" width="180"></el-table-column>
       <el-table-column fixed="right" label="操作" width="140">
         <template scope="scope">
           <el-button @click="handleClick(scope.row.vid)" type="text" size="small">查看</el-button>
@@ -50,9 +40,6 @@
     </el-table>
 
     <div class="block">
-        <div class="r_btn">
-          <el-button type="primary" @click="batchRemove">批量刪除</el-button>
-        </div>
         <div class="r_page">
           <el-pagination
               @size-change="handleSizeChange"
@@ -76,7 +63,7 @@
           <el-input v-model="form.displayname" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="模型語言" :label-width="formLabelWidth">
-          <el-input v-model="form.language" auto-complete="off"></el-input>
+          <el-input readonly="true" v-model="form.language" auto-complete="off"></el-input>
         </el-form-item>
          <el-form-item label="模型描述" :label-width="formLabelWidth">
           <el-input v-model="form.description" auto-complete="off"></el-input>
@@ -112,15 +99,13 @@
       return {
         tableData: [],
         formInline: {
-          name: '',
-          id:''
+          vid: '',
+          modeltype:'',
         },
         currentPage:1,
         total:0,
         pageSize:15,
-        nameList:[],
-        displaynameList:[],
-        modeltypeList:[],
+        modeltypeList:["all","intent","entity"],
         pickerOptions0: {
             disabledDate(time) {
               return time.getTime() < Date.now() - 8.64e7;
@@ -130,9 +115,8 @@
         dialogFormVisible: false,
         formLabelWidth: '120px',
         form: {
-            name: '',
-            address: '',
-            id:''
+            vid: '',
+            modeltype: ''
         },
         loading2: false,
         options: [],
@@ -150,9 +134,12 @@
         this.loading2 = true;
         var params = {
           page: this.currentPage,
-          pageSize: this.pageSize
+          pageSize: this.pageSize,
+          vid:this.formInline.vid,
+          modeltype:this.formInline.modeltype
         };
         getModelList(params).then(function(result){
+          console.log('params>>',params)
           this.tableData = result.data.tableData;
           this.total = result.data.total;
           this.loading2 = false;

@@ -11,11 +11,6 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="更新日期">
-        <el-date-picker v-model="selectDate" type="date" placeholder="选择日期" :picker-options="pickerOptions0">
-        </el-date-picker>
-      </el-form-item>
-
       <el-form-item>
         <el-button type="primary" @click="onSubmit">查询</el-button>
       </el-form-item>
@@ -99,8 +94,8 @@
       return {
            tableData: [],
           formInline: {
-          name: '',
-          id:''
+          intentname: '',
+          corpustype:''
         },
         currentPage:1,
         corpustypeList:['all','template','text','slot'],
@@ -115,9 +110,8 @@
         dialogFormVisible: false,
         formLabelWidth: '120px',
         form: {
-            name: '',
-            address: '',
-            id:''
+          intentname: '',
+          corpustype:''
         },
         loading2: false,
         options: [],
@@ -138,7 +132,8 @@
           page: this.currentPage,
           pageSize: this.pageSize,
           vid: vid,
-          corpustype:"all",
+          intentname: this.formInline.intentname,
+          corpustype:this.formInline.corpustype,
           pid:"TC001"
         };
         getIntentList(params).then(function(result){

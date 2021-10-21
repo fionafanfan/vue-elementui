@@ -18,11 +18,6 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="更新日期">
-        <el-date-picker v-model="selectDate" type="date" placeholder="选择日期" :picker-options="pickerOptions0">
-        </el-date-picker>
-      </el-form-item>
-
       <el-form-item>
         <el-button type="primary" @click="onSubmit">查询</el-button>
       </el-form-item>
@@ -39,7 +34,7 @@
       <el-table-column prop="updatetime" label="更新日期" width="180"></el-table-column>
       <el-table-column fixed="right" label="操作" width="140">
         <template scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+          <el-button @click="handleClick(scope.row.intentname)" type="text" size="small">查看</el-button>
           <el-button type="text" size="small"  @click="showEditDialog(scope.$index)">编辑</el-button>
           <el-button type="text" size="small"  @click="removeData(scope.$index)">删除</el-button>
         </template>
@@ -108,14 +103,15 @@
       return {
         tableData: [],
         formInline: {
-          name: '',
-          id:''
+          intentname: '',
+          intenttype:'',
+          isextend:'',
         },
         currentPage:1,
         total:0,
         pageSize:15,
-        isextendList:[],
-        intenttypeList:[],
+        isextendList:[0,1,2],
+        intenttypeList:['all','keyword','search','task','other'],
         pickerOptions0: {
             disabledDate(time) {
               return time.getTime() < Date.now() - 8.64e7;
@@ -125,9 +121,9 @@
         dialogFormVisible: false,
         formLabelWidth: '120px',
         form: {
-            name: '',
-            address: '',
-            id:''
+            intentname: '',
+            intenttype: '',
+            isextend:''
         },
         loading2: false,
         options: [],
@@ -147,6 +143,9 @@
         var params = {
           page: this.currentPage,
           pageSize: this.pageSize,
+          intentname: this.formInline.intentname,
+          intenttype: this.formInline.intenttype,
+          isextend: this.formInline.isextend,
           vid: vid
         };
         getIntentTypeList(params).then(function(result){
@@ -178,6 +177,16 @@
         this.form.intentname = data.intentname;
         this.form.displayname = data.displayname;
         this.dialogFormVisible = true;
+      },
+     // 查看具體意圖的語料數據
+      handleClick(row){
+          console.log('查看vid--->',row)
+          if (row) {
+                    this.formInline.intenttype = row
+                    console.log('====>',this.formInline.intenttype,row)
+                    window.location.href = ('/intent/data', '/intent/data')
+                }
+
       },
       update(){
         if (this.form.name == "") {

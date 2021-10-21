@@ -2,8 +2,14 @@
   <div id="users">
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
 
-      <el-form-item label="詞典標識名">
-        <el-input v-model="formInline.name" placeholder="詞典標識名"></el-input>
+      <el-form-item label="">
+        <el-input v-model="formInline.searchtext" placeholder="實體類型標識名"></el-input>
+      </el-form-item>
+
+      <el-form-item label="搜索类别">
+        <el-select v-model="formInline.searchtype" placeholder="實體類型標識名">
+          <el-option v-for="item in searchtypeList" :key="item" :label="item" :value="item"></el-option>
+        </el-select>
       </el-form-item>
 
       <el-form-item label="更新日期">
@@ -19,10 +25,10 @@
 
     <el-table :data="tableData" style="width: 100%" v-loading="loading2" element-loading-text="拼命加载中" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="name" label="詞典標識名" width="180"></el-table-column>
-      <el-table-column prop="displayname" label="詞典中文名"></el-table-column>
-      <el-table-column prop="standword" label="標準詞"></el-table-column>
-      <el-table-column prop="synonyms" label="同義詞"></el-table-column>
+      <el-table-column prop="entity_type" label="實體類型標識名" width="180"></el-table-column>
+      <el-table-column prop="displayname" label="實體類型中文名"></el-table-column>
+      <el-table-column prop="standword" label="實體標準詞"></el-table-column>
+      <el-table-column prop="synonyms" label="實體同義詞"></el-table-column>
       <el-table-column prop="updatetime" label="更新日期" width="180"></el-table-column>
       <el-table-column fixed="right" label="操作" width="140">
         <template scope="scope">
@@ -53,15 +59,15 @@
     <!-- Form -->
     <el-dialog title="编辑信息" :visible.sync="dialogFormVisible">
       <el-form :model="form">
-       <el-form-item label="詞典標識名" :label-width="formLabelWidth">
+       <el-form-item label="實體類型標識名" :label-width="formLabelWidth">
           <el-input readonly="true" v-model="form.entity_type" auto-complete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="標準詞" :label-width="formLabelWidth">
+        <el-form-item label="實體標準詞" :label-width="formLabelWidth">
           <el-input readonly="true" v-model="form.standword" auto-complete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="同義詞" :label-width="formLabelWidth">
+        <el-form-item label="實體同義詞" :label-width="formLabelWidth">
           <el-input v-model="form.synonyms" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
@@ -94,9 +100,12 @@
       return {
         tableData: [],
         formInline: {
-          name: '',
-          id:''
+          entity_type: '',
+          wordtype:'',
+          searchtext:'',
+          searchtype:''
         },
+        searchtypeList:["所有","實體類型標識名","實體標準詞"],
         currentPage:1,
         total:0,
         pageSize:15,
@@ -109,9 +118,8 @@
         dialogFormVisible: false,
         formLabelWidth: '120px',
         form: {
-            name: '',
-            address: '',
-            id:''
+          entity_type: '',
+          wordtype:''
         },
         loading2: false,
         options: [],
@@ -131,6 +139,8 @@
         var params = {
           page: this.currentPage,
           pageSize: this.pageSize,
+          searchtext: this.formInline.searchtext,
+          searchtype: this.formInline.searchtype,
           vid:vid
         };
         getEntityList(params).then(function(result){
@@ -159,9 +169,9 @@
       //打开编辑窗口
       showEditDialog(row){
         var data = this.tableData[row];
-        this.form.id = data.id;
-        this.form.name = data.name;
-        this.form.address = data.address;
+        this.form.entity_type = data.entity_type;
+        this.form.standword = data.standword;
+        this.form.synonyms = data.synonyms;
         this.dialogFormVisible = true;
       },
       update(){
