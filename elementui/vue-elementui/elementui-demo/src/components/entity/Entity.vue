@@ -105,7 +105,7 @@
           searchtext:'',
           searchtype:''
         },
-        searchtypeList:["所有","實體類型標識名","實體標準詞"],
+        searchtypeList:["所有","實體類型標識名","實體標準詞","實體同義詞"],
         currentPage:1,
         total:0,
         pageSize:15,
