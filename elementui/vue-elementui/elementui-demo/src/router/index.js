@@ -61,6 +61,14 @@ export default new Router({
         {
           path: '/elemtest',
           component: resolve => require(['../components/vuetest/VueElemForm.vue'], resolve)
+        },
+        {
+          path: '/elemfileupload',
+          component: resolve => require(['../components/vuetest/VueElemFileUpload.vue'], resolve)
+        },
+        {
+          path: '/dialog',
+          component: resolve => require(['../components/vuetest/VueElemChatbotTest.vue'], resolve)
         }
       ]
     }
