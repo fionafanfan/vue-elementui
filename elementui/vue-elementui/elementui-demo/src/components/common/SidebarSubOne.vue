@@ -78,6 +78,10 @@
                       title: '意圖管理',
                         subs: [
                         {
+                        index: '/sys/intents',
+                        title: '系统意圖類型列表'
+                        },
+                        {
                         index: '/intents',
                         title: '意圖類型列表'
                         },
@@ -92,6 +96,10 @@
                       index: '2',
                       title: '實體管理',
                         subs: [
+                         {
+                        index: '/sys/entitys',
+                        title: '系统實體類型列表'
+                        },
                         {
                         index: '/entitys',
                         title: '實體類型列表'

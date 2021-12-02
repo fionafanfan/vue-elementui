@@ -1,81 +1,4 @@
 <template>
-  <div id="users">
-    <el-form :inline="true" :model="formInline" class="demo-form-inline">
-
-      <el-form-item label="模型標識名">
-        <el-input v-model="formInline.vid" placeholder="模型標識名"></el-input>
-      </el-form-item>
-
-      <el-form-item label="模型類型">
-        <el-select v-model="formInline.modeltype" placeholder="模型類型">
-          <el-option v-for="item in modeltypeList" :key="item" :label="item" :value="item"></el-option>
-        </el-select>
-      </el-form-item>
-
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
-      </el-form-item>
-
-    </el-form>
-
-    <div class="block">
-        <div class="r_btn">
-          <el-button type="primary" size="small"  @click="showAddModelDialog()">新增</el-button>
-        </div>
-    </div>
-
-    <el-table :data="tableData" style="width: 100%" v-loading="loading2" element-loading-text="拼命加载中" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="vid" label="模型標識名"  width="400" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="displayname" label="模型中文名"></el-table-column>
-      <el-table-column prop="description" label="模型描述"></el-table-column>
-      <el-table-column prop="modeltype" label="模型類型"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="140">
-        <template scope="scope">
-          <el-button @click="handleClick(scope.row.vid)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small"  @click="showEditDialog(scope.$index)">編輯</el-button>
-          <el-button type="text" size="small"  @click="removeData(scope.$index)">刪除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <div class="block">
-        <div class="r_page">
-          <el-pagination
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
-              :current-page="currentPage"
-              :page-sizes="[5,10,15, 20,25,30]"
-              :page-size="pageSize"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="total">
-          </el-pagination>
-        </div>
-    </div>
-
-    <!-- Form -->
-    <el-dialog title="编辑信息" :visible.sync="dialogFormVisible">
-      <el-form :model="form">
-        <el-form-item label="模型標識名" :label-width="formLabelWidth">
-          <el-input readonly="true"  v-model="form.vid" auto-complete="off"></el-input>
-        </el-form-item>
-         <el-form-item label="模型中文名" :label-width="formLabelWidth">
-          <el-input v-model="form.displayname" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="模型語言" :label-width="formLabelWidth">
-          <el-input readonly="true" v-model="form.language" auto-complete="off"></el-input>
-        </el-form-item>
-         <el-form-item label="模型描述" :label-width="formLabelWidth">
-          <el-input v-model="form.description" auto-complete="off"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="update">确 定</el-button>
-      </div>
-    </el-dialog>
-
-  </div>
 </template>
 <style type="text/css" scoped>
   .block {
@@ -101,7 +24,6 @@
         formInline: {
           vid: '',
           modeltype:'',
-          issys:2
         },
         currentPage:1,
         total:0,
@@ -117,8 +39,7 @@
         formLabelWidth: '120px',
         form: {
             vid: '',
-            modeltype: '',
-            issys:2
+            modeltype: ''
         },
         loading2: false,
         options: [],
@@ -138,8 +59,7 @@
           page: this.currentPage,
           pageSize: this.pageSize,
           vid:this.formInline.vid,
-          modeltype:this.formInline.modeltype,
-          issys:this.formInline.issys
+          modeltype:this.formInline.modeltype
         };
         getModelList(params).then(function(result){
           console.log('params>>',params)

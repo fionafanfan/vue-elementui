@@ -15,8 +15,10 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "element-ui": "^1.4.6",
     "vue": "^2.4.2",
+    "vue-bot-ui": "^0.2.8",
     "vue-router": "^2.7.0"
   },
   "devDependencies": {

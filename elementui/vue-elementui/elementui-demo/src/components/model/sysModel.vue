@@ -101,7 +101,7 @@
         formInline: {
           vid: '',
           modeltype:'',
-          issys:2
+          issys:1,
         },
         currentPage:1,
         total:0,
@@ -118,7 +118,7 @@
         form: {
             vid: '',
             modeltype: '',
-            issys:2
+            issys:1,
         },
         loading2: false,
         options: [],
@@ -139,7 +139,7 @@
           pageSize: this.pageSize,
           vid:this.formInline.vid,
           modeltype:this.formInline.modeltype,
-          issys:this.formInline.issys
+          issys:this.formInline.issys,
         };
         getModelList(params).then(function(result){
           console.log('params>>',params)

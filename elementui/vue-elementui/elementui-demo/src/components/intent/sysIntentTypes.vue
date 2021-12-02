@@ -2,13 +2,13 @@
   <div id="users">
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
 
-      <el-form-item label="模型標識名">
-        <el-input v-model="formInline.vid" placeholder="模型標識名"></el-input>
+      <el-form-item label="意圖標識名">
+        <el-input v-model="formInline.intentname" placeholder="意圖標識名"></el-input>
       </el-form-item>
 
-      <el-form-item label="模型類型">
-        <el-select v-model="formInline.modeltype" placeholder="模型類型">
-          <el-option v-for="item in modeltypeList" :key="item" :label="item" :value="item"></el-option>
+      <el-form-item label="意圖類型">
+        <el-select v-model="formInline.intenttype" placeholder="意圖類型">
+          <el-option v-for="item in intenttypeList" :key="item" :label="item" :value="item"></el-option>
         </el-select>
       </el-form-item>
 
@@ -17,26 +17,13 @@
       </el-form-item>
 
     </el-form>
-
-    <div class="block">
-        <div class="r_btn">
-          <el-button type="primary" size="small"  @click="showAddModelDialog()">新增</el-button>
-        </div>
-    </div>
-
     <el-table :data="tableData" style="width: 100%" v-loading="loading2" element-loading-text="拼命加载中" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="vid" label="模型標識名"  width="400" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="displayname" label="模型中文名"></el-table-column>
-      <el-table-column prop="description" label="模型描述"></el-table-column>
-      <el-table-column prop="modeltype" label="模型類型"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="140">
-        <template scope="scope">
-          <el-button @click="handleClick(scope.row.vid)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small"  @click="showEditDialog(scope.$index)">編輯</el-button>
-          <el-button type="text" size="small"  @click="removeData(scope.$index)">刪除</el-button>
-        </template>
-      </el-table-column>
+      <el-table-column prop="intentname" label="意圖標識名" width="180"></el-table-column>
+      <el-table-column prop="displayname" label="意圖中文名"></el-table-column>
+      <el-table-column prop="intenttype" label="意圖類型"></el-table-column>
+      <el-table-column prop="description" label="意圖描述"></el-table-column>
+      <el-table-column prop="updatetime" label="更新日期" width="180"></el-table-column>
     </el-table>
 
     <div class="block">
@@ -56,17 +43,17 @@
     <!-- Form -->
     <el-dialog title="编辑信息" :visible.sync="dialogFormVisible">
       <el-form :model="form">
-        <el-form-item label="模型標識名" :label-width="formLabelWidth">
-          <el-input readonly="true"  v-model="form.vid" auto-complete="off"></el-input>
+        <el-form-item label="意圖標識名" :label-width="formLabelWidth">
+          <el-input readonly="true" v-model="form.intentname" auto-complete="off"></el-input>
         </el-form-item>
-         <el-form-item label="模型中文名" :label-width="formLabelWidth">
-          <el-input v-model="form.displayname" auto-complete="off"></el-input>
+         <el-form-item label="意圖中文名" :label-width="formLabelWidth">
+          <el-input readonly="true" v-model="form.displayname" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="模型語言" :label-width="formLabelWidth">
-          <el-input readonly="true" v-model="form.language" auto-complete="off"></el-input>
+         <el-form-item readonly="true" label="意圖類型" :label-width="formLabelWidth">
+          <el-input v-model="form.intenttype" auto-complete="off"></el-input>
         </el-form-item>
-         <el-form-item label="模型描述" :label-width="formLabelWidth">
-          <el-input v-model="form.description" auto-complete="off"></el-input>
+         <el-form-item readonly="true" label="是否可擴" :label-width="formLabelWidth">
+          <el-input v-model="form.isextend" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -91,22 +78,22 @@
   }
 </style>
 <script type="text/javascript">
-  import {getModelList} from '../../api'
-  import {getModelDeatilDate} from '../../api'
+  import {getIntentTypeList} from '../../api'
 
   export default {
     data() {
       return {
         tableData: [],
         formInline: {
-          vid: '',
-          modeltype:'',
-          issys:2
+          intentname: '',
+          intenttype:'',
+          isextend:'',
         },
         currentPage:1,
         total:0,
         pageSize:15,
-        modeltypeList:["all","intent","entity"],
+        isextendList:[0,1,2],
+        intenttypeList:['all','keyword','search','task','other'],
         pickerOptions0: {
             disabledDate(time) {
               return time.getTime() < Date.now() - 8.64e7;
@@ -116,9 +103,9 @@
         dialogFormVisible: false,
         formLabelWidth: '120px',
         form: {
-            vid: '',
-            modeltype: '',
-            issys:2
+            intentname: '',
+            intenttype: '',
+            isextend:''
         },
         loading2: false,
         options: [],
@@ -134,15 +121,16 @@
       //加载数据
       loadData() {
         this.loading2 = true;
+        var vid = localStorage.getItem('vid','intent_entity_common');
         var params = {
           page: this.currentPage,
           pageSize: this.pageSize,
-          vid:this.formInline.vid,
-          modeltype:this.formInline.modeltype,
-          issys:this.formInline.issys
+          intentname: this.formInline.intentname,
+          intenttype: this.formInline.intenttype,
+          isextend: this.formInline.isextend,
+          vid: 'systerm'
         };
-        getModelList(params).then(function(result){
-          console.log('params>>',params)
+        getIntentTypeList(params).then(function(result){
           this.tableData = result.data.tableData;
           this.total = result.data.total;
           this.loading2 = false;
@@ -165,46 +153,26 @@
         this.currentPage = val;
         this.loadData();
       },
-      //打开新增模型窗口-添加新的模型
-      showAddModelDialog(){
-        this.form.id = data.id;
-        this.form.name = data.name;
-        this.dialogFormVisible = true;
-      },
-      // 查看特定模型的具體數據
-      handleClick(row){
-          console.log('查看vid--->',row)
-          if (row) {
-                    localStorage.setItem('vid',row)
-                    window.location.href = ('intents', 'intents')
-                }
-
-      },
       //打开编辑窗口
       showEditDialog(row){
         var data = this.tableData[row];
-        this.form.vid = data.vid;
-        var params = {
-          vid: this.form.vid
-        };
-        getModelDeatilDate(params).then(function(result){
-          this.form.displayname = result.data.displayname;
-          this.form.description = result.data.description;
-          this.form.language = result.data.language;
-          this.form.isPrivate = result.data.isPrivate;
-        }.bind(this)).catch(function (error) {
-            this.loading2 = false;
-            console.log(error);
-        }.bind(this));
+        this.form.intentname = data.intentname;
+        this.form.displayname = data.displayname;
         this.dialogFormVisible = true;
       },
+     // 查看具體意圖的語料數據
+      handleClick(row){
+          console.log('查看vid--->',row)
+          if (row) {
+                    this.formInline.intenttype = row
+                    console.log('====>',this.formInline.intenttype,row)
+                    window.location.href = ('/intent/data', '/intent/data')
+                }
+
+      },
       update(){
-        if (this.form.displayname == "") {
-          this.$message.error('模型中文名不能为空');
-          return;
-        }
-       if (this.form.description == "") {
-          this.$message.error('模型描述不能为空');
+        if (this.form.name == "") {
+          this.$message.error('姓名不能为空');
           return;
         }
         this.$message({
